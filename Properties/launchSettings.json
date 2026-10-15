@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "RealEstate.Console": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "REALESTATE_CONNECTION": "Host=localhost;Port=5432;Database=realestate;Username=postgres;Password=2509"
+      }
+    }
+  }
+}
