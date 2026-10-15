@@ -1,0 +1,27 @@
+BEGIN;
+INSERT INTO estate.users(full_name,login) VALUES('Навчальний агент','agent'),('Другий агент','agent2');
+INSERT INTO estate.roles(name) VALUES('admin'),('agent');
+INSERT INTO estate.user_roles VALUES(1,1),(1,2),(2,2);
+INSERT INTO estate.property_types(name) VALUES('Квартира'),('Будинок'),('Комерційне приміщення');
+INSERT INTO estate.amenities(name) VALUES('Балкон'),('Ліфт'),('Паркінг');
+CALL estate.create_client('Олена Коваль','+380000000001','owner@example.test',1);
+CALL estate.create_client('Іван Петренко','+380000000002','buyer@example.test',1);
+CALL estate.create_client('Марія Бондар','+380000000003','tenant@example.test',1);
+CALL estate.create_property(1,'Київ, вул. Садова, 12',54,'Світла квартира з балконом',1,1);
+CALL estate.create_property(2,'Львів, вул. Зелена, 8',120,'Будинок із садом',1,1);
+CALL estate.create_property(1,'Київ, вул. Лісова, 5',38,'Квартира для оренди',1,1);
+INSERT INTO estate.property_amenities VALUES(1,1),(1,2),(2,3);
+INSERT INTO estate.property_photos(property_id,url) VALUES(1,'https://example.test/apartment.jpg');
+CALL estate.create_listing(1,'sale',2600000,1);
+CALL estate.create_listing(2,'sale',4800000,1);
+CALL estate.create_listing(3,'rent',18000,1);
+CALL estate.change_listing_price(1,2500000,1);
+CALL estate.schedule_viewing(1,2,now()+interval '1 day',1);
+CALL estate.create_offer(1,2,2450000,1);
+-- Completed example contract; other two listings remain available for the console demo.
+CALL estate.create_contract('11111111-1111-1111-1111-111111111111',3,18000,1);
+CALL estate.add_contract_participant('11111111-1111-1111-1111-111111111111',1,'owner',1);
+CALL estate.add_contract_participant('11111111-1111-1111-1111-111111111111',3,'customer',1);
+CALL estate.add_payment('11111111-1111-1111-1111-111111111111',5000,1);
+CALL estate.close_listing(3,1);
+COMMIT;
