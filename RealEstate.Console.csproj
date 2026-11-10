@@ -17,4 +17,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NoSQL\" />
+  </ItemGroup>
+
 </Project>

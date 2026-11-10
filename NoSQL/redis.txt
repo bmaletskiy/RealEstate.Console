@@ -1,0 +1,22 @@
+RealEstate.Console — Redis (NoSQL key-value), basic operations.
+Run these commands from Windows PowerShell with the realestate-redis container running.
+
+# Read/write a property status
+ docker exec realestate-redis redis-cli SET property:50000:status available
+ docker exec realestate-redis redis-cli GET property:50000:status
+
+# Property view counter
+ docker exec realestate-redis redis-cli SET property:50000:views 0
+ docker exec realestate-redis redis-cli INCR property:50000:views
+ docker exec realestate-redis redis-cli INCR property:50000:views
+ docker exec realestate-redis redis-cli GET property:50000:views
+
+# Expiring cache: 300 seconds
+ docker exec realestate-redis redis-cli SET property:50000:cache cached EX 300
+ docker exec realestate-redis redis-cli TTL property:50000:cache
+
+# Delete and test existence
+ docker exec realestate-redis redis-cli DEL property:50000:status
+ docker exec realestate-redis redis-cli EXISTS property:50000:status
+
+Expected responses: OK, available, OK, 1, 2, 2, OK, TTL <= 300, 1, 0.
